@@ -143,7 +143,7 @@ export class Event {
 }
 
 
-export class EventWithArgs<T> {
+export class EventWithArg<T> {
   private handlers: ISimpleCollection<(e: T) => void>;
 
   private registeredCount: number = 0;
