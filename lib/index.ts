@@ -97,8 +97,54 @@ function createCollection<T extends object>(weak: boolean = true): ISimpleCollec
 }
 
 
-export class Event<T> {
-  private handlers: ISimpleCollection<(e: T) => void> = createCollection<(e: T) => void>();
+export class Event {
+  private handlers: ISimpleCollection<() => void>;
+
+  private registeredCount: number = 0;
+
+  private weak: boolean;
+
+  constructor(weak: boolean = true) {
+    this.weak = weak;
+    this.clearHandlers();
+  }
+
+  public once(handler: () => void): () => void {
+    let h = (): void => {
+      handler();
+      this.unregister(h);
+    };
+
+    return this.register(h);
+  }
+
+  public register(handler: () => void): () => void {
+    this.handlers.add(handler);
+    this.registeredCount++;
+    return handler;
+  }
+
+  public unregister(hander: () => void): void {
+    this.handlers.delete(hander);
+
+    if (this.registeredCount > 0) {
+      this.registeredCount--;
+    }
+  }
+
+  public emit(): void {
+    this.handlers.forEach(handler => handler());
+  }
+
+  public clearHandlers(): void {
+    this.handlers = createCollection<() => void>(this.weak);
+    this.registeredCount = 0;
+  }
+}
+
+
+export class EventWithArgs<T> {
+  private handlers: ISimpleCollection<(e: T) => void>;
 
   private registeredCount: number = 0;
 
