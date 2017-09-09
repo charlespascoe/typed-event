@@ -1,6 +1,6 @@
 {
   "name": "typed-event",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Strongly-Typed Events for TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
