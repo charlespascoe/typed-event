@@ -76,7 +76,7 @@ let foo = new Foo();
 
 let handler = foo.barEvent.register(() => console.log('Handler!'));
 
-foor.bar();
+foo.bar();
 
 foo.barEvent.unregister(handler);
 
