@@ -38,7 +38,7 @@ class WeakMapCollection<T extends object> implements ISimpleCollection<T> {
       } else {
         func(<T>this.weakMap.get(key));
       }
-    })
+    });
   }
 }
 
